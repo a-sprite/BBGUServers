@@ -22,6 +22,8 @@
 
 * [git团队协作](https://zhuanlan.zhihu.com/p/23478654)
 
+* [github提交规范](https://www.jianshu.com/p/6eafeb9b1edb)
+
 * 版本统一
 
 * 日志信息、注释...
