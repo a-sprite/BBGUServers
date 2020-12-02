@@ -1,5 +1,5 @@
 # BBGUServers
-> 基于微服务的BBGU服务平台。
+> 基于Vue.js的BBGU服务平台前端部分。
 
 ![image-20201005103448993](https://i.loli.net/2020/10/05/OPNeLmZWsvAh4SK.png)
 
@@ -7,8 +7,8 @@
 
 ### 前置知识：
 
-* 一门编程语言 java php go python...
-* 语言对应的web开发框架
+* 一门编程语言 java
+* web开发框架 SpringBoot
 * 前端：Vue2
 * 代码管理工具 Git
 * 环境管理工具 Docker
@@ -72,7 +72,7 @@ github项目地址：https://github.com/kid1999/BBGUServers
 
 信息补充： [README.md 文件](https://github.com/kid1999/BBGUServers/blob/main/README.md)
 
-服务器：ip - 端口 -  账号 - 密码
+服务器：10.16.66.169  -  root - root123456
 
 数据库：ip - 端口 -  账号 - 密码
 
