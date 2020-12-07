@@ -1,18 +1,17 @@
 <template>
-	<div id="app" style="background-color: #FAFAFA;">
-		<div id="header">
-			<Header></Header>
+  <div id="app" style="background-color: #FAFAFA;">
+   <div id="header">
+      <Header></Header>
+    </div>
+	<!-- 返回顶部 begin -->
+	<a-back-top>
+		<div class="ant-back-top-inner">
+			<a-icon style='font-size: 36px;' type="vertical-align-top" />
 		</div>
-		<router-view/>
-		<!-- 返回顶部 begin -->
-		<a-back-top>
-			<div class="ant-back-top-inner">
-				<a-icon style='font-size: 36px;' type="vertical-align-top" />
-			</div>
-		</a-back-top>
-		<!-- 返回顶部 end -->
-		<Footer></Footer>
-	</div>
+	</a-back-top>
+	<!-- 返回顶部 end -->
+    <router-view/>
+  </div>
 </template>
 
 
@@ -20,13 +19,11 @@
 
 <script>
   import Header from '@/components/Header.vue'
-  import Footer from '@/components/Footer.vue'
   
   export default {
     name: 'Home',
     components: {
       Header,
-	  Footer
     }
   }
 </script>
