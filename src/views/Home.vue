@@ -135,11 +135,6 @@
 			<a-icon style='margin-left: 10px;' type="sync" spin />
 		</div>
 		<!-- 加载数据 end-->
-		<!-- 底部 begin -->
-		<a-layout-footer style="text-align: center">
-		BBGU Islands ©2020 Created by 一瓶雪碧
-		</a-layout-footer>
-		<!-- 底部 end -->
 		<!-- 图片预览 begin -->
 		<a-modal v-model="modalImg" :closable='true' :centered='true' :footer="null">
 			<img style="width: auto;height: auto;max-width: 100%;max-height: 100%;" :src="imgPreview" />
