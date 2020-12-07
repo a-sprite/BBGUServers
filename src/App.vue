@@ -1,13 +1,15 @@
 <template>
-  <div id="app">
-    <div id="header">
+  <div id="app" style="background-color: #FAFAFA;">
+   <div id="header">
       <Header></Header>
     </div>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/axios">Axios</router-link>
-    </div>
+	<!-- 返回顶部 begin -->
+	<a-back-top>
+		<div class="ant-back-top-inner">
+			<a-icon style='font-size: 36px;' type="vertical-align-top" />
+		</div>
+	</a-back-top>
+	<!-- 返回顶部 end -->
     <router-view/>
   </div>
 </template>
@@ -17,6 +19,7 @@
 
 <script>
   import Header from '@/views/Header.vue'
+  
   export default {
     name: 'Home',
     components: {
@@ -50,4 +53,16 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+	/* 返回顶部 */
+	.ant-back-top-inner {
+		height: 40px;
+		width: 40px;
+		line-height: 40px;
+		border-radius: 4px;
+		background-color: #1088e9;
+		color: #fff;
+		text-align: center;
+		font-size: 20px;
+	}
 </style>
