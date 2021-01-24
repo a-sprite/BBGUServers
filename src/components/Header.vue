@@ -5,7 +5,7 @@
 */
 <template>
 	<!-- 溢出隐藏 防止窗口变小 -->
-	<div class='border-shadow' style="overflow:hidden;">
+	<div class='border-shadow4' style="overflow:hidden;background-color: rgb(246,246,246);">
 		<a-row type='flex' justify='center' align='middle' style="flex-wrap: nowrap;background-color: #FFF;height: 64px;box-shadow:0px 2px 2px #EEEEEE;">
 			<a-col :span='16' class='flex flex-nowrap align-center justify-between'>
 				<div class="flex flex-nowrap align-center">
@@ -58,22 +58,27 @@
 					</a-menu>
 					<!-- 导航按钮 end -->
 					<!-- 搜索框 begin -->
-					<a-input-search placeholder="搜索" style="width: 200px;margin-left: 20px;" />
+					<!-- <a-input-search placeholder="搜索" style="width: 200px;margin-left: 20px;" /> -->
 					<!-- 搜索框 end -->
 				</div>
 				<!-- 登录&注册&账号状态栏 begin -->
 				<div>
-					<div class="flex align-center" v-if="isLogin==true">
-						<a-icon type="camera" theme='twoTone' style='font-size: 32px;margin-right: 20px;'/>
-						<span v-if="notice!=0" @click="noticeLess">
-							<a-badge :count="notice"><a-avatar shape="square" icon="user"/></a-badge>
-						</span>
-						<span v-else @click="noticeAdd">
-							<a-badge><a-avatar shape="square" icon="user"/></a-badge>
-						</span>
+					<div class="flex align-center" style="margin-left: 20px;" v-if="$store.getters.isLogin==true">
+						<a-dropdown>
+							<!-- <a-icon type="camera" theme='twoTone' style='font-size: 32px;margin-left: 20px;margin-right: 20px;'/> -->
+							<a-avatar :src='$store.state.user.avatar' v-if='$store.getters.isLogin==true' :size='40' @click="e => e.preventDefault()" /><a-avatar v-else shape="square" icon="user" :size='40' />
+							<a-menu slot="overlay">
+								<a-menu-item>
+								<a href="javascript:;">个人信息</a>
+								</a-menu-item>
+								<a-menu-item>
+								<a @click="logout">退出登录</a>
+								</a-menu-item>
+							</a-menu>
+						</a-dropdown>
 					</div>
 					<div v-else>
-						<div class="flex flex-nowrap">
+						<div class="flex flex-nowrap" style="margin-left: 20px;">
 							<a class="login" @click="toLogin">登录</a>
 							<a style="color: #9E9E9E;font-size: 20px;font-weight: 500;margin: 0px 5px 0px 5px;">|</a>
 							<a class="login" @click="toRegister">注册</a>
@@ -86,32 +91,41 @@
 							<div class="modalMiddle">
 								<a-tabs defaultActiveKey='1' :activeKey='btnState' @tabClick='tabChange'>
 									<a-tab-pane key="tab1" tab="登录">
-										<a-form id="components-form-demo-normal-login" :form="form" class="login-form" @submit="handleSubmit">
-											<a-form-item>
-												<a-input v-decorator="['userName',{ rules: [{ required: true, message: '请输入你的账号' }] }]" placeholder="请输入你的账号">
+										<div class="flex flex-column justify-center">
+											<div style="margin-top: 20px;margin-bottom: 10px;">
+												<a-input placeholder="请输入你的账号" v-model='username' @change="changeUsername" allow-clear>
 													<a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
 												</a-input>
-											</a-form-item>
-											<a-form-item>
-												<a-input v-decorator="['password',{ rules: [{ required: true, message: '请输入你的密码' }] },]" type="password" placeholder="请输入你的密码">
+											</div>
+											<div style="margin-top: 10px;margin-bottom: 10px;">
+												<a-input-password placeholder="请输入你的密码" v-model='password' @change="changePassword" allow-clear>
 													<a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
-												</a-input>
-											</a-form-item>
-											<a-form-item>
-												<a-checkbox v-decorator="['remember',{valuePropName: 'checked',initialValue: true,},]">
-												记住我
-												</a-checkbox>
-												<a class="login-form-forgot" href="">
-												忘记密码
-												</a>
-												<a-button type="primary" html-type="submit" class="login-form-button" @click='login'>
-												登录
-												</a-button>
-											</a-form-item>
-										</a-form>
+												</a-input-password>
+											</div>
+											<div class='flex justify-between'  style="margin-top: 10px;margin-bottom: 30px;">
+												<a-checkbox>记住我</a-checkbox>
+												<a class="login-form-forgot" >忘记密码</a>
+											</div>
+											<a-button type="primary" html-type="submit" class="login-form-button" :disabled="logBtn" @click='login'>登录</a-button>
+										</div>
 									</a-tab-pane>
 									<a-tab-pane key="tab2" tab="注册" force-render>
-										1111111111
+										<div class="flex flex-column justify-center">
+											<div style="margin-top: 20px;margin-bottom: 10px;">
+												<a-input placeholder="输入你喜欢的昵称" v-model='registerUsername' @change="changeRegisterUsername">
+													<a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
+												</a-input>
+											</div>
+											<div style="margin-top: 10px;margin-bottom: 40px;">
+												<a-input-password type="password" placeholder="请输入你的密码" v-model='registerPassword' @change="changeRegisterPassword" allow-clear>
+													<a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
+												</a-input-password>
+												<a-input-password type="password" placeholder="再输入一次" style='margin-top: 20px;' v-model='registerPasswordSec' @change="changeRegisterPasswordSec" allow-clear>
+													<a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
+												</a-input-password>
+											</div>
+											<a-button type="primary" html-type="submit" class="login-form-button" :disabled="regBtn" @click='register'>注册</a-button>
+										</div>
 									</a-tab-pane>
 								</a-tabs>
 							</div>
@@ -126,31 +140,30 @@
 </template>
 
 <script>
+	import { postLogin,postRegister } from '@/apis/axios'
+	import qs from 'qs'
+	
     export default {
         name: "Header",
         data(){
             return{
 				current:['main'],
 				modalLogin: false,//登录弹窗
-				isLogin:false,//登录状态
 				btnState:'',//判断点击登录还是注册
-				notice:0//通知数
+				notice:0,//通知数
+				logBtn:true,//登录按钮状态
+				regBtn:true,//注册按钮状态
+				username:'',
+				password:'',
+				registerUsername:'',
+				registerPassword:'',
+				registerPasswordSec:''
             }
         },
 		beforeCreate() {
 			this.form = this.$form.createForm(this, { name: 'normal_login' });
 		},
-		// props: {//参数传递需要在props里面声明
-		// 	'current': {
-		// 		type: String,
-		// 		default: ''
-		// 	},
-		// },
 		methods: {
-			//事件传递需要通过$emit来传递，参数refresh要与父组件@后面的属性相对应
-			// refresh(){
-			// 	this.$emit('refresh');
-			// }
 			onSearch(value) {
 				console.log(value);
 			},
@@ -175,21 +188,110 @@
 			noticeAdd(){
 				this.notice+=1
 			},
-			handleSubmit(e) {//表单验证
-				e.preventDefault();
-				this.form.validateFields((err, values) => {
-					if (!err) {
-						console.log('Received values of form: ', values);
-					}
-				});
-			},
 			login(){
-				//测试用，后续不会这也么暴力用的...
-				this.$store.state.isLogin=true
-				this.isLogin=this.$store.state.isLogin
-				this.modalLogin=false
-				// console.log(this.isLogin,this.$store.state.isLogin)
-			}
+				if(this.username!=''&&this.password!=''){
+					postLogin(qs.stringify({
+							username:this.username,
+							password:this.password
+						})
+					)
+					.then(res => {
+						// 请求成功
+						console.log(res)
+						if(res.status==200){
+							this.$store.state.user=res.user
+							this.modalLogin=false
+							this.$message.success('登录成功了!');
+						}else if(res.status==400){
+							this.$message.warning(res.message);
+						}
+					})
+					.catch(error => {
+						this.$message.error(error)
+					})
+				}else{
+					this.$message.warning('账号或密码没有输入哦~');
+				}
+			},
+			logout(){
+				this.$store.state.user=''
+			},
+			register(){
+				if(this.registerUsername.length<3){
+					this.$message.warning('用户名长度不能小于3，要三个字或数字字母以上才可');
+				}else if(this.registerPassword.length<6){
+					this.$message.error('密码长度不能小于6');
+				}else if(this.registerPassword!=this.registerPasswordSec){
+					this.$message.warning('两次输入的密码不一样鸭~');
+				}else{
+					postRegister(qs.stringify({
+							username:this.registerUsername,
+							password:this.registerPassword
+						})
+					)
+					.then(res => {
+						if(res.code==200){
+							this.$message.success('注册成功~');//直接登录
+							this.username=this.registerUsername
+							this.password=this.registerPassword
+							this.registerUsername=''
+							this.registerPassword=''
+							this.btnState = 'tab1'
+							this.logBtn=false
+						}else if(res.code==400){
+							this.$message.error('用户名和密码不能为空');
+						}else if(res.code==401){
+							this.$message.error('用户名长度不能小于3');
+						}else if(res.code==402){
+							this.$message.error('密码长度不能小于6');
+						}else if(res.code==409){
+							this.$message.waring('账号已被注册啦');
+						}else if(res.code==444){
+							this.$message.error('注册失败！');
+						}
+					})
+					.catch(error => {
+						this.$message.error(error)
+					})
+				}
+			},
+			//监听登录输入username和password变化而改变登录按钮的状态
+			changeUsername(){
+				if(this.username!=''&&this.password!=''){
+					this.logBtn=false
+				}else{
+					this.logBtn=true
+				}
+			},
+			changePassword(){
+				if(this.username!=''&&this.password!=''){
+					this.logBtn=false
+				}else{
+					this.logBtn=true
+				}
+			},
+			//监听注册输入username和password变化而改变注册按钮的状态
+			changeRegisterUsername(){
+				if(this.registerUsername!=''&&this.registerPassword!=''&&this.registerPasswordSec!=''){
+					this.regBtn=false
+				}else{
+					this.regBtn=true
+				}
+			},
+			changeRegisterPassword(){
+				if(this.registerUsername!=''&&this.registerPassword!=''&&this.registerPasswordSec!=''){
+					this.regBtn=false
+				}else{
+					this.regBtn=true
+				}
+			},
+			changeRegisterPasswordSec(){
+				if(this.registerUsername!=''&&this.registerPassword!=''&&this.registerPasswordSec!=''){
+					this.regBtn=false
+				}else{
+					this.regBtn=true
+				}
+			},
 		}
     }
 </script>
@@ -213,6 +315,8 @@
 	.modalMiddle{
 		padding: 0px 40px 0px 40px;
 	}
+	
+	/* 登录&注册 */
 	#components-form-demo-normal-login .login-form {
 		max-width: 300px;
 	}

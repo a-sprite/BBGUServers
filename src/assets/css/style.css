@@ -1,3 +1,8 @@
+/**
+* @auther: 一瓶雪碧
+* @date: 2020/12/1
+* @desciption:  样式
+*/
 	/* 边框阴影 扁平化效果 */
 	.border-shadow{
 		overflow: hidden;
@@ -5,10 +10,21 @@
 		box-shadow:0 3px 1px -2px rgba(0,0,0,.1),0 2px 5px 0 rgba(0,0,0,.2),0 5px 10px 0 rgba(0,0,0,.12);
 	}
 	.border-shadow2{
+		overflow: hidden;
 		-webkit-box-shadow: 1px 1px 10px #aaa;
-		-moz-box-shadow: 	1px 1px 10px #aaa;
-		box-shadow: 		1px 1px 10px #aaa;
+		-moz-box-shadow:1px 1px 10px #aaa;
+		box-shadow:1px 1px 10px #aaa;
 		-pie-background: linear-gradient(#fff, #fff);
+	}
+	.border-shadow3{
+		overflow: hidden;
+		-webkit-box-shadow: 1px 1px 10px #aaa;
+		-moz-box-shadow:1px 1px 10px #aaa;
+		box-shadow:1px 1px 10px #aaa;
+		-pie-background: linear-gradient(#fff, #fff);
+	} 
+	.border-shadow4{
+		box-shadow: 0 5px 10px rgba(0,0,0, 0.05);
 	}
 	/* 图片等比例缩放 */
 	.img-scaling{
@@ -20,6 +36,12 @@
 	/* flex相关 */
 	.flex{
 		display: flex;
+	}
+	.flex-column{
+		flex-direction:column;
+	}
+	.flex-row{
+		flex-direction:row;
 	}
 	.align-center{
 		align-items: center;
@@ -51,7 +73,31 @@
 	.flex-nowrap{
 		flex-wrap: nowrap;
 	}
+	.flex-wrap{
+		flex-wrap: wrap;
+	}
 	/* 文字内容相关 */
 	.white-nowrap{
 		white-space: nowrap
+	}
+	.text-line-one{
+		overflow:hidden;
+		text-overflow:llipsis;
+		display:-webkit-box;
+		-webkit-box-orient:vertical;
+		-webkit-line-clamp:1;
+	}
+	.text-line-two{
+		overflow:hidden;
+		text-overflow:llipsis;
+		display:-webkit-box; 
+		-webkit-box-orient:vertical;
+		-webkit-line-clamp:2;
+	}
+	.text-line-three{
+		overflow:hidden;
+		text-overflow:llipsis;
+		display:-webkit-box; 
+		-webkit-box-orient:vertical;
+		-webkit-line-clamp:3;
 	}

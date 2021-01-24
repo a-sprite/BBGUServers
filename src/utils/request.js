@@ -14,12 +14,13 @@ instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlenco
 let httpCode = {        //这里我简单列出一些常见的http状态码信息，可以自己去调整配置
     400: '请求参数错误',
     401: '权限不足, 请重新登录',
+	402: '当前请求失败',
     403: '服务器拒绝本次访问',
     404: '请求资源未找到',
     500: '内部服务器错误',
     501: '服务器不支持该请求中使用的方法',
     502: '网关错误',
-    504: '网关超时'
+    504: '网关超时',
 }
 
 /** 添加请求拦截器 **/
@@ -49,18 +50,19 @@ instance.interceptors.request.use(config => {
     return Promise.reject(error)
 });
 
-/** 添加响应拦截器  **/
+/** 添加响应拦截器  **/    //此处有异常：进行 点赞操作 取消点赞和点赞状态码都是200,但点赞ERROR，无法返回数据,所以先注释状态码判断，后面再找问题吧//
 instance.interceptors.response.use(response => {
     loadingInstance.close()
-    if (response.data.status === 200) {     // 响应结果里的status: ok是我与后台的约定，大家可以根据实际情况去做对应的判断
-        return Promise.resolve(response.data)
-    } else {
-        Message({
-            message: response.data.message,
-            type: 'error'
-        })
-        return Promise.reject(response.data.message)
-    }
+	return Promise.resolve(response.data)
+    // if (response.data.status == 200) {     // 响应结果里的status: ok是我与后台的约定，大家可以根据实际情况去做对应的判断
+    //     return Promise.resolve(response.data)
+    // } else {
+    //     Message({
+    //         message: response.data.message,
+    //         type: 'error'
+    //     })
+    //     return Promise.reject(response.data.message)
+    // }
 }, error => {
     loadingInstance.close();
     if (error.response) {
